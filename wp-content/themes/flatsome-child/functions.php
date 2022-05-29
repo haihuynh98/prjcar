@@ -6,7 +6,7 @@
 | Helper functions
 |--------------------------------------------------------------------------
 */
-//require_once "functions/tiger-helper.php";
+require_once "functions/tiger-helper.php";
 
 /*
 |--------------------------------------------------------------------------
