@@ -1,0 +1,7 @@
+.mega-sub-menu .mega-menu-row .mega-menu-item > figure {
+margin: auto;
+}
+
+.mega-menu-item.widget_media_image {
+    text-align: center !important;
+}
