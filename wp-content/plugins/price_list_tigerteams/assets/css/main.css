@@ -1,0 +1,54 @@
+.price-list-tiger table td {
+	border-bottom: unset!important;
+}
+
+button.button_dutoanchiphi {
+	background: #e11428;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 14px;
+	padding: 10px 15px;
+	border: 0;
+	border-radius: 0;
+	border-bottom: 3px solid #e85e70;
+	outline: 0;
+}
+
+button.button_dutoanchiphi:hover {
+	background: #ccc;
+	border-bottom: 3px solid #444;
+	color: #444;
+}
+
+.devvn_muaxe_note {
+	color: #000;
+	margin-bottom: 10px;
+	font-size: 14px;
+	border: 1px dashed #ff0000;
+	padding: 5px 10px;
+	background: #fffdf3;
+	line-height: 22px;
+	border-radius: 5px;
+}
+.devvn_muaoto_right fieldset {
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+}
+.devvn_muaoto_right fieldset legend {
+	padding: 0 10px;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+table.table_dutoanchiphi tfoot td {
+	border-top: 2px solid #000 !important;
+	padding: 10px 0 !important;
+	font-size: 20px;
+	color: #000;
+}
+table.table_dutoanchiphi tfoot td:nth-child(2) .tongdutoan_val,table.table_dutoanchiphi tfoot td:nth-child(2) .tongdutoan_vnd {
+	color: red !important;
+	font-weight: 700;
+}

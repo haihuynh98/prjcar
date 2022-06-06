@@ -45,10 +45,13 @@ function price_listing()
                         <tfoot>
                             <tr>
                                 <td></td>
-                                <td><button type="button" class="button_dutoanchiphi">Dự toán chi phí</button></td>
+                                <td><button type="button" class="button_dutoanchiphi" disabled>Dự toán chi phí</button></td>
                             </tr>
                         </tfoot>
-                    </table> </div>';
+                    </table>
+						<div class="xe_thumb"></div>
+						<div class="devvn_muaxe_note">* Công cụ tính toán chỉ mang tính chất tham khảo</div>
+                    </div>';
 
 	return $html;
 }
@@ -71,10 +74,18 @@ function render_price_detail($postId, $term)
 	$script = '<script type="text/javascript">
             $(\'.enable_baohiemvatchat\').on("click", function() {
             if($(this).is(":checked")) {
-                $(\'.tongdutoan_val\').html($(\'input#tongdutoanPDC\').val());
+                $(\'.tongdutoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val()));
                 }else {
-                $(\'.tongdutoan_val\').html($(\'input#tongdutoan\').val());
+                $(\'.tongdutoan_val\').html(numberWithCommas($(\'input#tongdutoan\').val()));
               }
+            })
+
+            $(\'#vaynganhang\').on(\'change\',function() {
+            	let per = $(this).val();
+           		let deposit = $(\'#deposit\').val();
+             	$(\'.vaynganhang_val\').html(numberWithCommas(parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)));
+             	$(\'.tienthanhtoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val() - parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)));
+             	$(\'.canthanhtoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val() - parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)-deposit));
             })
 </script>';
 	return '<div class="devvn_muaoto_right">
@@ -154,8 +165,8 @@ function render_price_detail($postId, $term)
                             <tr>
                                 <td>TỔNG CHI PHÍ LĂN BÁNH:</td>
                                 <td><span class="tongdutoan_val">'.number_format($totalWithPDC).'</span>
-                                <input type="hidden" id="tongdutoan" name="tongdutoan" value="'.number_format($total).'">
-                                <input type="hidden" id="tongdutoanPDC" name="tongdutoanPDC" value="'.number_format($totalWithPDC).'">
+                                <input type="hidden" id="tongdutoan" name="tongdutoan" value="'.$total.'">
+                                <input type="hidden" id="tongdutoanPDC" name="tongdutoanPDC" value="'.$totalWithPDC.'">
                                 </td>
                             </tr>
                         </tfoot>
@@ -166,43 +177,62 @@ function render_price_detail($postId, $term)
                             <tbody>
                                 <tr>
                                     <td>Tổng chi phí lăn bánh xe</td>
-                                    <td><span class="tienxe_val"></span></td>
+                                    <td><span class="tienxe_val">'.number_format($totalWithPDC).'</span></td>
                                 </tr>
                                 <tr>
                                     <td>Tỷ lệ vay ngân hàng</td>
-                                    <td><input type="number" min="0" max="80" value="75" style="width: 100px;" name="vaynganhang" class="vaynganhang">%</td>
+                                    <td><input type="number" min="0" max="80" value="75" style="width: 100px;" name="vaynganhang" id="vaynganhang" class="vaynganhang">%</td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền ngân hàng hỗ trợ</td>
-                                    <td><span class="vaynganhang_val"></span></td>
+                                    <td><span class="vaynganhang_val">'.number_format(($totalWithPDC*75)/100).'</span></td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền phải thanh toán</td>
-                                    <td><span class="tienthanhtoan_val"></span></td>
+                                    <td><span class="tienthanhtoan_val">'.number_format($totalWithPDC-($totalWithPDC*75)/100).'</span></td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền đã cọc</td>
-                                    <td><span class="dacoc_val"></span></td>
+                                    <td>
+                                    	<span class="dacoc_val">'.number_format($metaPost['_deposit_' . $term][0]).'</span>
+                                    	<input type="hidden" name="deposit" id="deposit" value="'.$metaPost['_deposit_' . $term][0].'">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền còn lại cần thanh toán</td>
-                                    <td><span class="canthanhtoan_val"></span></td>
+                                    <td><span class="canthanhtoan_val">'.number_format($totalWithPDC-($totalWithPDC*75)/100-$metaPost['_deposit_' . $term][0]).'</span></td>
                                 </tr>
                             </tbody>
                         </table>
                         <small style="color: red;">* Mua qua ngân hàng "Bảo hiểm vật chất" là bắt buộc</small>
                     </fieldset>
-                </div>'.$script;
+                </div>';
 }
 
 function price_listing_form()
 {
 	$adminAjaxLink = admin_url('admin-ajax.php');
+	$functionScript = '$(\'.enable_baohiemvatchat\').on("click", function() {
+            if($(this).is(":checked")) {
+                $(\'.tongdutoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val()));
+                }else {
+                $(\'.tongdutoan_val\').html(numberWithCommas($(\'input#tongdutoan\').val()));
+              }
+            })
+
+            $(\'#vaynganhang\').on(\'change\',function() {
+            	let per = $(this).val();
+           		let deposit = $(\'#deposit\').val();
+             	$(\'.vaynganhang_val\').html(numberWithCommas(parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)));
+             	$(\'.tienthanhtoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val() - parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)));
+             	$(\'.canthanhtoan_val\').html(numberWithCommas($(\'input#tongdutoanPDC\').val() - parseInt(($(\'input#tongdutoanPDC\').val()*per)/100)-deposit));
+            })';
 
 	$script = '<script type="text/javascript">
         $(document).ready(function(){
             $(\'#price_list_cat\').on("change", function(){
             $(\'#price_list_item\').attr(\'disabled\',\'disabled\')
+            $(\'.button_dutoanchiphi\').attr(\'disabled\',\'disabled\')
                 $.ajax({
                     type : "post", //Phương thức truyền post hoặc get
                     dataType : "json", //Dạng dữ liệu trả về xml, json, script, or html
@@ -220,6 +250,8 @@ function price_listing_form()
                         if(response.success) {
                             $(\'#price_list_item\').html(response.data);
                             $(\'#price_list_item\').removeAttr(\'disabled\')
+                            $(\'.button_dutoanchiphi\').removeAttr(\'disabled\')
+                            '.$functionScript.'
                         }
                         else {
                             alert(\'Đã có lỗi xảy ra\');
@@ -239,6 +271,34 @@ function price_listing_form()
                     dataType : "json", //Dạng dữ liệu trả về xml, json, script, or html
 						url : \'' . $adminAjaxLink . '\', //Đường dẫn chứa hàm xử lý dữ liệu. Mặc định của WP như vậy
                     data : {
+                        action: "loadImage", //Tên action
+                        price_id : $(\'#price_list_item option:selected\').val(),
+                        district : $(\'#dictrict_register option:selected\').val()
+                    },
+                    context: this,
+                    beforeSend: function(){
+                        //Làm gì đó trước khi gửi dữ liệu vào xử lý
+                    },
+                    success: function(response) {
+                        //Làm gì đó khi dữ liệu đã được xử lý
+                        if(response.success) {
+                            $(\'.xe_thumb\').html(response.data);
+                            '.$functionScript.'
+                        }
+                        else {
+                            alert(\'Đã có lỗi xảy ra\');
+                        }
+                    },
+                    error: function( jqXHR, textStatus, errorThrown ){
+                        //Làm gì đó khi có lỗi xảy ra
+                        console.log( \'The following error occured: \' + textStatus, errorThrown );
+                    }
+                })
+                $.ajax({
+                    type : "post", //Phương thức truyền post hoặc get
+                    dataType : "json", //Dạng dữ liệu trả về xml, json, script, or html
+						url : \'' . $adminAjaxLink . '\', //Đường dẫn chứa hàm xử lý dữ liệu. Mặc định của WP như vậy
+                    data : {
                         action: "loadPriceDetail", //Tên action
                         price_id : $(\'#price_list_item option:selected\').val(),
                         district : $(\'#dictrict_register option:selected\').val()
@@ -251,7 +311,7 @@ function price_listing_form()
                         //Làm gì đó khi dữ liệu đã được xử lý
                         if(response.success) {
                             $(\'.devvn_muaoto_right\').html(response.data);
-                             $(\'#price_list_item\').removeAttr(\'disabled\')
+                            '.$functionScript.'
                         }
                         else {
                             alert(\'Đã có lỗi xảy ra\');
@@ -272,19 +332,19 @@ function price_listing_form()
                             <tr>
                                 <td>Giá niêm yết:</td>
                                 <td>
-                                    <span class="giaxe_val"></span>
+                                    <span class="giaxe_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Giảm giá:</td>
                                 <td>
-                                    <span class="discount_val"></span>
+                                    <span class="discount_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Giá bán:</td>
                                 <td>
-                                    <span class="giaban_val"></span>
+                                    <span class="giaban_val">0</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -295,19 +355,18 @@ function price_listing_form()
                             <tr>
                                 <td>Phí trước bạ:</td>
                                 <td>
-                                    <span class="phitruocba_val"></span>
+                                    <span class="phitruocba_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phí đăng Kiểm :</td>
-                                <td>
-                                    340.000                                    <input type="hidden" value="340000" class="input_to_calc">
+                                <td>0<input type="hidden" value="340000" class="input_to_calc">
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phí biển số:</td>
                                 <td>
-                                    <span class="phibienso_val"></span>
+                                    <span class="phibienso_val">0</span>
                                 </td>
                             </tr>
                             <tr>
@@ -317,25 +376,25 @@ function price_listing_form()
                                         Bảo hiểm Vật Chất:                                    </label>
                                 </td>
                                 <td>
-                                    <span class="baohiemvatchat_val"></span>
+                                    <span class="baohiemvatchat_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bảo hiểm dân sự:</td>
                                 <td>
-                                    <span class="baohiemdansu_val"></span>
+                                    <span class="baohiemdansu_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phí đường bộ 1 năm:</td>
                                 <td>
-                                    <span class="phiduongbo_val"></span>
+                                    <span class="phiduongbo_val">0</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phí dịch vụ đăng ký :</td>
                                 <td>
-                                    <span class="phidichvudangky_val"></span>
+                                    <span class="phidichvudangky_val">0</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -343,7 +402,7 @@ function price_listing_form()
                             <tr>
                                 <td>TỔNG CHI PHÍ LĂN BÁNH:</td>
 
-                                <td><span class="tongdutoan_val">0</span>
+                                <td><span class="tongdutoan_val">0</span><span class="tongdutoan_vnd">VND</span>
                                  <input type="hidden" name="tongdutoan" value="0">
                                 <input type="hidden" name="tongdutoanPDC" value="0"></td>
                             </tr>
@@ -355,7 +414,7 @@ function price_listing_form()
                             <tbody>
                                 <tr>
                                     <td>Tổng chi phí lăn bánh xe</td>
-                                    <td><span class="tienxe_val"></span></td>
+                                    <td><span class="tienxe_val">0</span></td>
                                 </tr>
                                 <tr>
                                     <td>Tỷ lệ vay ngân hàng</td>
@@ -363,19 +422,19 @@ function price_listing_form()
                                 </tr>
                                 <tr>
                                     <td>Số tiền ngân hàng hỗ trợ</td>
-                                    <td><span class="vaynganhang_val"></span></td>
+                                    <td><span class="vaynganhang_val">0</span></td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền phải thanh toán</td>
-                                    <td><span class="tienthanhtoan_val"></span></td>
+                                    <td><span class="tienthanhtoan_val">0</span></td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền đã cọc</td>
-                                    <td><span class="dacoc_val"></span></td>
+                                    <td><span class="dacoc_val">0</span></td>
                                 </tr>
                                 <tr>
                                     <td>Số tiền còn lại cần thanh toán</td>
-                                    <td><span class="canthanhtoan_val"></span></td>
+                                    <td><span class="canthanhtoan_val">0</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -383,7 +442,7 @@ function price_listing_form()
                     </fieldset>
                 </div>';
 	$left_html = price_listing();
-	$htmlOutput = '<div class="container"><div class="row"><div class="col medium-6 small-12 large-6">' . $left_html . '</div><div class="col medium-6 small-12 large-6">' . $right_html . '</div></div></div>';
+	$htmlOutput = '<div class="container price-list-tiger"><div class="row"><div class="col medium-6 small-12 large-6">' . $left_html . '</div><div class="col medium-6 small-12 large-6">' . $right_html . '</div></div></div>';
 	return $htmlOutput . $script;
 }
 
@@ -432,26 +491,23 @@ function loadPriceDetail()
 	ob_start(); //bắt đầu bộ nhớ đệm
 	$price_id = $_POST['price_id'];
 	$district = $_POST['district'];
-//	$post_new = new WP_Query(array(
-//		'post_type' => 'price_list',
-//		'tax_query' => array(
-//			array(
-//				'taxonomy' => 'price_tag',
-//				'terms' => $price_id,
-//				'field' => 'term_id',
-//			)
-//		),
-//	));
 	echo render_price_detail($price_id, $district);
-//	if ($post_new->have_posts()):
-//		while ($post_new->have_posts()):$post_new->the_post();
-//			echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
-//		endwhile;
-//	endif;
+	$result = ob_get_clean(); //cho hết bộ nhớ đệm vào biến $result
 
+	wp_send_json_success($result); // trả về giá trị dạng json
 
-//	wp_reset_query();
-//
+	die();//bắt buộc phải có khi kết thúc
+}
+
+add_action('wp_ajax_loadImage', 'loadImage');
+add_action('wp_ajax_nopriv_loadImage', 'loadImage');
+function loadImage()
+{
+
+	ob_start(); //bắt đầu bộ nhớ đệm
+	$price_id = $_POST['price_id'];
+	$district = $_POST['district'];
+	echo get_the_post_thumbnail($price_id);
 	$result = ob_get_clean(); //cho hết bộ nhớ đệm vào biến $result
 
 	wp_send_json_success($result); // trả về giá trị dạng json
