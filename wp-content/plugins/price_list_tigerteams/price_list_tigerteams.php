@@ -22,51 +22,51 @@ const DISTRICTS = [
 const ELEMENT_LIST = [
 	'annual_price' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Giá niên yết'
 	],
 	'reduced_price' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Giá giảm'
 	],
 	'price' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Giá bán'
 	],
 	'registration_fee' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Phí trước bạ'
 	],
 	'registration_fee_2' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Phí đăng kiểm'
 	], 'license_plate_fee' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Phí biển số'
 	], 'physical_damage_coverage' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Bảo hiểm vật chất'
 	], 'civil_liability_insurance' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Bảo hiểm dân sự'
 	], 'registration_service_fee' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Phí dịch vụ đăng ký'
 	], 'road_toll_per_year' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Phí đường bộ 1 năm'
 	], 'deposit' => [
 		'type' => 'number',
-		'min' => 1000,
+		'min' => 0,
 		'label' => 'Đặt cọc'
 	],
 ];
