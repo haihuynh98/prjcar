@@ -52,3 +52,7 @@ table.table_dutoanchiphi tfoot td:nth-child(2) .tongdutoan_val,table.table_dutoa
 	color: red !important;
 	font-weight: 700;
 }
+
+table.table_dutoanchiphi tr td:nth-child(2) {
+	text-align: right;
+}
