@@ -1,0 +1,30 @@
+2022-06-05T12:30:46+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function render_price_detail(), 1 passed in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 357 and exactly 2 expected in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php:94
+Stack trace:
+#0 /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php(357): render_price_detail(319)
+#1 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(307): loadpost_init('')
+#2 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(331): WP_Hook->apply_filters('', Array)
+#3 /Applications/MAMP/htdocs/carford/wp-includes/plugin.php(476): WP_Hook->do_action(Array)
+#4 /Applications/MAMP/htdocs/carford/wp-admin/admin-ajax.php(187): do_action('wp_ajax_loadpos...')
+#5 {main}
+  thrown in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 94
+
+2022-06-05T12:31:05+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function render_price_detail(), 1 passed in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 357 and exactly 2 expected in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php:94
+Stack trace:
+#0 /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php(357): render_price_detail(319)
+#1 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(307): loadpost_init('')
+#2 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(331): WP_Hook->apply_filters('', Array)
+#3 /Applications/MAMP/htdocs/carford/wp-includes/plugin.php(476): WP_Hook->do_action(Array)
+#4 /Applications/MAMP/htdocs/carford/wp-admin/admin-ajax.php(187): do_action('wp_ajax_loadpos...')
+#5 {main}
+  thrown in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 94
+
+2022-06-05T12:31:50+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function render_price_detail(), 1 passed in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 360 and exactly 2 expected in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php:94
+Stack trace:
+#0 /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php(360): render_price_detail('341')
+#1 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(307): loadpost_init('')
+#2 /Applications/MAMP/htdocs/carford/wp-includes/class-wp-hook.php(331): WP_Hook->apply_filters('', Array)
+#3 /Applications/MAMP/htdocs/carford/wp-includes/plugin.php(476): WP_Hook->do_action(Array)
+#4 /Applications/MAMP/htdocs/carford/wp-admin/admin-ajax.php(187): do_action('wp_ajax_loadpos...')
+#5 {main}
+  thrown in /Applications/MAMP/htdocs/carford/wp-content/plugins/price_list_tigerteams/includes/shortcode-build-form-price.php on line 94
+

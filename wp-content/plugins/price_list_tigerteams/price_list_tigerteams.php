@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Price List
  * Plugin URI:      PLUGIN SITE HERE
- * Description:     The price listing plugin
+ * Description:     The price listing plugin. Using short code [price_listing_form] to show the form price listing
  * Author:          TigerGentlemen
  * Author URI:      https://tigergentlemen.com
  * Text Domain:     price_list_tigerteams
